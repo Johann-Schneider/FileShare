@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FileShare</title>
+    <style>
+      body {
+        font-family: Arial;
+        padding: 30px;
+        margin: 0;
+        background: #2b2b2b;
+        background: linear-gradient(
+          90deg,
+          rgba(43, 43, 43, 1) 0%,
+          rgba(84, 84, 84, 1) 100%
+        );
+        color: white;
+      }
+      input {
+        margin-top: 20px;
+      }
+      a {
+        color: #ff7b00;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #ff7b00;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>File Upload</h2>
+    <input type="file" id="fileInput" class="upload" />
+    <button onclick="upload()" type="button">
+      Upload
+    </button>
+
+    <p id="status"></p>
+
+    <script>
+      async function upload() {
+        const file = document.getElementById("fileInput").files[0];
+        if (!file) return;
+
+        const form = new FormData();
+        form.append("file", file);
+
+        const res = await fetch("/upload", {
+          method: "POST",
+          body: form,
+        });
+
+        const data = await res.json();
+
+        document.getElementById("status").innerHTML = `
+    <b>Upload OK!</b><br>
+    Download-Link:<br>
+    <a href="${data.url}" target="_blank">${data.url}</a>
+  `;
+      }
+    </script>
+  </body>
+</html>
