@@ -37,4 +37,4 @@ app.get("/file/:name", (req, res) => {
   res.download(filePath);
 });
 
-app.listen(3000, () => console.log("Server läuft auf Port 3000"));
+app.listen(3000, () => console.log("FileShare running on localhost:3000"));
